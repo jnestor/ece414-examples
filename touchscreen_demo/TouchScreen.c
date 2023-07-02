@@ -1,5 +1,5 @@
 // Updated for PIC32 by Matthew Watkins
-// Ported to RP2050 by John Nestor
+// Updated for RP2050 by John Nestor
 
 // Touch screen library with X Y and Z (pressure) readings as well
 // as oversampling to avoid 'bouncing'
@@ -22,18 +22,19 @@
 
 #define NUMSAMPLES 3
 
-
 #if (NUMSAMPLES > 2)
-static void insert_sort(int array[], uint8_t size) {
+static void insert_sort(int array[], uint8_t size)
+{
   uint8_t j;
-  int s; //was save
-  
+  int s; // was save
+
   int i;
-  for (i = 1; i < size; i++) {
+  for (i = 1; i < size; i++)
+  {
     s = array[i];
     for (j = i; j >= 1 && s < array[j - 1]; j--)
       array[j] = array[j - 1];
-    array[j] = s; 
+    array[j] = s;
   }
 }
 #endif
