@@ -7,7 +7,7 @@ project(gpio_demo_project)
 pico_sdk_init()
 
 add_executable(gpio_demo
-        gpio_demo.c
+        gpio_demo.c sw_in.c led25_out.c
         )
 
 # pull in common dependencies

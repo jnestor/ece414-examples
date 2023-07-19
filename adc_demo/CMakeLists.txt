@@ -19,7 +19,7 @@ target_link_libraries(adc_demo PRIVATE
     pico_bootsel_via_double_reset
     )
 
-pico_add_extra_outputs(adc_demo)
+pico_add_extra_outputs(adc_demo) 
 
 
 
