@@ -7,11 +7,11 @@ project(gpio_demo_project)
 pico_sdk_init()
 
 add_executable(gpio_demo
-        gpio_demo.c sw_in.c led25_out.c
+        gpio_demo.c
         )
 
 # pull in common dependencies
-target_link_libraries(gpio_demo pico_stdlib)
+target_link_libraries(gpio_demo pico_stdlib pico_bootsel_via_double_reset)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(gpio_demo)

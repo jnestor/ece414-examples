@@ -22,7 +22,7 @@ int main() {
                 outval = outval >> 1;
             }
             else outval = outval << 1;
-        }`
+        }
         else {
             if (outval == 0x1) {
                 dir_left = true;
