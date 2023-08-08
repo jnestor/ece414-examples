@@ -11,7 +11,7 @@ add_executable(blink2
         )
 
 # pull in common dependencies
-target_link_libraries(blink2 pico_stdlib)
+target_link_libraries(blink2 pico_stdlib pico_bootsel_via_double_reset)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(blink2)
