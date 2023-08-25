@@ -3,6 +3,13 @@
  * Read & calculate elapsed time with 32-bit timestamps
  * Note that the hardware_time module provides similar
  * functions using 64-bit timestamps
+ * 
+ * Caution: Rollover on 32-bit time measurementswill occur 
+ * once every 2^32 microseconds (11.93 hours).  We handle one
+ * rollover with the code provided, but if the time between
+ * measurements exceeds twice this amount (23.8 hours) then
+ * the calculation will be incorrect.  For measurements of
+ * this duration, consider using the real-time clock instead
  *
  * ECE 414 - Lafayette College
  * J. Nestor July 2023

@@ -23,7 +23,7 @@ void InitFSM_tbird() {
 void TickFct_tbird() {
     bool lb, rb;
     lb = sw_in_read1();        
-    rb = sw_in_read1();
+    rb = sw_in_read2();
     switch (TB_State) {          // transitions
         case TB_SMSTART:         // Initial transition
             TB_State = TB_IDLE;
@@ -65,22 +65,22 @@ void TickFct_tbird() {
             led_out_write(0b000000);
             break;
         case TB_L1:
-            led_out_write(0b001000);
-            break;
-        case TB_L2:
-            led_out_write(0b011000);
-            break;
-        case TB_L3:
-            led_out_write(0b111000);
-            break;
-        case TB_R1:
             led_out_write(0b000100);
             break;
-        case TB_R2:
+        case TB_L2:
             led_out_write(0b000110);
             break;
-        case TB_R3:
+        case TB_L3:
             led_out_write(0b000111);
+            break;
+        case TB_R1:
+            led_out_write(0b001000);
+            break;
+        case TB_R2:
+            led_out_write(0b011000);
+            break;
+        case TB_R3:
+            led_out_write(0b111000);
             break;
         case TB_HAZ:
             led_out_write(0b111111);
