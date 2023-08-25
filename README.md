@@ -1,4 +1,5 @@
-# ECE 414 Embedded Systems - Lafayette College
+# ECE 414 Embedded Systems
+## Lafayette College
 ## Raspberry Pi Examples
 This repository contains several examples which we will use
 in class and lab.  You are welcome to download and use these
