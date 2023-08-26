@@ -18,6 +18,7 @@ static uint slice_num;
 void pwm_pin_init(uint16_t level) {
     gpio_set_function(PWM_PIN, GPIO_FUNC_PWM);
     slice_num = pwm_gpio_to_slice_num(PWM_PIN);
+    pwm_set_clkdiv(slice_num, 1.9375);
     pwm_set_wrap(slice_num, 0xffff);
     pwm_set_chan_level(slice_num, PWM_CHAN_A, level);
     pwm_set_enabled(slice_num, true);

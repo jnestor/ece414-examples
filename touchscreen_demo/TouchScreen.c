@@ -6,6 +6,7 @@
 // (c) ladyada / adafruit
 // Code under MIT License
 
+#include "stdio.h"
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
@@ -70,11 +71,13 @@ void getPoint(struct TSPoint * p) {
   // mPORTASetPinsDigitalOut(XPbit | XMbit);
   // mPORTASetBits(XPbit);
   // mPORTAClearBits(XMbit);
-   
+   printf("getting samples\n");
    for (i=0; i<NUMSAMPLES; i++) {
       samples[i] = adc_read();
+      printf("samples[%d] = %d\n", i, samples[i]);
       //samples[i] = readADC(YPAN);
    }
+   printf("samples obtained\n");
 #if NUMSAMPLES > 2
    insert_sort(samples, NUMSAMPLES);
 #endif
@@ -168,7 +171,7 @@ void getPoint(struct TSPoint * p) {
    }
 
    //printf("Internal point %d, %d, %d\n", x, y, z);
-   
+   printf("done?\n");
    setTSPoint(p, x, y, z);
 }
 
