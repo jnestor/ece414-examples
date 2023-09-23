@@ -1,6 +1,7 @@
 #include <stdio.h> //The standard C library
 #include <stdlib.h> //C stdlib
 #include "pico/stdlib.h" //Standard library for Pico
+#include "pico/rand.h" // for random numbers
 #include <math.h> //The standard math library
 #include "hardware/gpio.h" //The hardware GPIO library
 #include "pico/time.h" //The pico time library
@@ -8,6 +9,12 @@
 #include "hardware/pwm.h" //The hardware PWM library
 #include "hardware/pio.h" //The hardware PIO library
 #include "TFTMaster.h" //The TFT Master library
+
+// local symbolic constants for brevity in code
+#define DW ILI9340_TFTWIDTH
+#define DH ILI9340_TFTHEIGHT
+// maximum radius for drawing circles
+#define MAX_RAD     50
 
 int main(){ //The program running on core 0
     int i, j; //The insex variables
@@ -24,7 +31,6 @@ int main(){ //The program running on core 0
     while(1){ //Infinite while loop
         printf("@");
         sleep_ms(500);
-        unsigned long begin_time = (unsigned long)(get_absolute_time() / 1000); //Get the start time
         tft_fillScreen(ILI9340_BLUE);
         tft_drawRect(5,5,100,100,ILI9340_GREEN);
         for (int i=1; i<20; i++) {
@@ -33,32 +39,44 @@ int main(){ //The program running on core 0
                 tft_writeString("this is a string");
         }
         sleep_ms(500);
-        // switch(count){ //Based on the current count, switch different colours
-        //     case 0: col = ILI9340_BLUE;
-        //             break;
-        //     case 1: col = ILI9340_RED;
-        //             break;
-        //     case 2: col = ILI9340_GREEN;
-        //             break;
-        //     case 3: col = ILI9340_CYAN;
-        //             break;
-        //     case 4: col = ILI9340_MAGENTA;
-        //             break;
-        //     case 5: col = ILI9340_YELLOW;
-        //             break;
-        //     case 6: col = ILI9340_WHITE;
-        //             break;
-        // }
-        // for(i = 0; i < ILI9340_TFTWIDTH / 4; i++){
-        //     for(j = 0; j < ILI9340_TFTHEIGHT / 4; j++){
-        //         //tft_drawRect(i << 2, j << 2, 4, 4, col); //Simply drawing a rectangle takes 222 ms
-        //         tft_fillRect(i << 2, j << 2, 4, 4, col); //Filling the entire rectangle surprisingly takes 110 ms
-        //     }
-        // }
-        // count = (count + 1) % 7; //Increment the count and keep it between 0-6
-        // unsigned char exTime = ((unsigned long)(get_absolute_time() / 1000) - begin_time); //Calculate the amount of time taken
-        // printf("%u\n", exTime); //Print the time out
+        static char buffer[64];
+        uint32_t i, idx;
+
+        idx = 0;
+        while (1)
+        {
+                // Clear the screen
+                tft_fillScreen(ILI9340_BLACK);
+
+                // Draw some text
+                tft_setCursor(0, 0); // Upper Left Hand Corner
+                tft_setTextColor(ILI9340_WHITE);
+                tft_setTextSize(2);
+
+                tft_writeString("Hello World.");
+                for (i = 1; i < 10; i++)
+                {
+                    tft_setCursor(0, i * 20);
+                    sprintf(buffer, "The index is %d", idx++);
+                    tft_writeString(buffer);
+                }
+
+                // Draw some random lines.  Note: Avoid using get_rand_32() function in
+                // performance critical code!
+                for (i = 0; i < 10; i++)
+                {
+                    tft_drawLine(get_rand_32() % DW, get_rand_32() % DH, get_rand_32() % DW, get_rand_32() % DH, get_rand_32() & 0xffff);
+                }
+
+                // Draw some get_rand_32()om filled circles
+                for (i = 0; i < 10; i++)
+                {
+                    tft_fillCircle(get_rand_32() % (DW - 2 * MAX_RAD) + MAX_RAD, get_rand_32() % (DH - 2 * MAX_RAD) + MAX_RAD, get_rand_32() % MAX_RAD, get_rand_32() & 0xffff);
+                }
+
+                // Wait a bit.
+                sleep_ms(500);
+        }
     }
 }
-
 
