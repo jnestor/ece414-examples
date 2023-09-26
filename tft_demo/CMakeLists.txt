@@ -13,8 +13,9 @@ pico_generate_pio_header(tft_demo ${CMAKE_CURRENT_LIST_DIR}/SPIPIO.pio)
 target_sources(tft_demo PRIVATE tft_demo.c TFTMaster.c glcdfont.c)
 
 target_link_libraries(tft_demo PRIVATE 
-    pico_stdlib pico_rand hardware_gpio pico_time hardware_pio 
-    hardware_pwm hardware_irq  
+    pico_stdlib pico_rand 
+    hardware_gpio hardware_pio 
+    hardware_irq  
     pico_bootsel_via_double_reset
     )
 

@@ -19,6 +19,7 @@
 #include "hardware/timer.h"
 #include "timer.h"
 #include "pico/stdlib.h"
+#include "stdint.h"
 
 uint32_t timer_read() {
     return time_us_32();

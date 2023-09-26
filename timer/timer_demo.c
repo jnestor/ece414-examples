@@ -11,6 +11,8 @@
 
 #include "pico/stdlib.h"
 #include "timer.h"
+#include "stdint.h"
+#include "stdbool.h"
 
 #define LED_A 2
 #define LED_B 3
