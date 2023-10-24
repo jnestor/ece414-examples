@@ -1,5 +1,5 @@
 // Updated for PIC32 by Matthew Watkins
-// Updated for RP2050 by John Nestor
+// Updated for RP2040 by John Nestor
 
 // Touch screen library with X Y and Z (pressure) readings as well
 // as oversampling to avoid 'bouncing'
@@ -11,8 +11,6 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 #include "TouchScreen.h"
-
-
 
 // increase or decrease the touchscreen oversampling. This is a little different than you may think:
 // 1 is no oversampling, whatever data we get is immediately returned
@@ -57,8 +55,6 @@ void getPoint(struct TSPoint * p) {
   gpio_set_dir(YMbit,false);  // set YM as input (high impedance
   adc_gpio_init(YPbit);       // set YP as analog input
   adc_select_input(YPchan);
-  //mPORTASetPinsDigitalIn(YMbit);
-  //mPORTASetPinsAnalogIn(YPbit);
   
   gpio_init(XPbit);
   gpio_set_dir(XPbit, true);
@@ -66,11 +62,6 @@ void getPoint(struct TSPoint * p) {
   gpio_init(XMbit);
   gpio_set_dir(XMbit,true);
   gpio_put(XMbit,0);   // drive L on XM
-  // mPORTAClearBits(YPbit | YMbit);
-
-  // mPORTASetPinsDigitalOut(XPbit | XMbit);
-  // mPORTASetBits(XPbit);
-  // mPORTAClearBits(XMbit);
    for (i=0; i<NUMSAMPLES; i++) {
       samples[i] = adc_read();
    }
@@ -88,9 +79,6 @@ void getPoint(struct TSPoint * p) {
    gpio_set_dir(XPbit,false);  // set XP as input (high impedance
    adc_gpio_init(XMbit);       // set XM as analog input
    adc_select_input(XMchan);
-   //mPORTASetPinsDigitalIn(XPbit);
-   //mPORTASetPinsAnalogIn(XMbit);
-   //mPORTAClearBits(XPbit);
 
   gpio_init(YPbit);
   gpio_set_dir(YPbit, true);
@@ -98,14 +86,9 @@ void getPoint(struct TSPoint * p) {
   gpio_init(YMbit);
   gpio_set_dir(YMbit,true);
   gpio_put(YMbit,0);   // drive L on YM
-   
-  //  mPORTASetPinsDigitalOut(YPbit | YMbit);
-  //  mPORTASetBits(YPbit);
-  //  mPORTAClearBits(YMbit);
-  
+     
    for (i=0; i<NUMSAMPLES; i++) {
        samples[i] = adc_read();
-       //samples[i] = readADC(XMAN);
    }
 
 #if NUMSAMPLES > 2
@@ -123,29 +106,20 @@ void getPoint(struct TSPoint * p) {
    gpio_init(XPbit);
    gpio_set_dir(XPbit, true);
    gpio_put(XPbit,0);   // drive L on XP
-  //  mPORTASetPinsDigitalOut(XPbit);
-  //  mPORTAClearBits(XPbit);
-
   
    // Set Y- to VCC
    gpio_init(YMbit);
    gpio_set_dir(YMbit, true);
    gpio_put(YMbit,1);
-  //  mPORTASetBits(YMbit);
   
    // Make X- and Y+ analog inputs
   adc_gpio_init(XMbit);       // set XM as analog input
   adc_gpio_init(YPbit);       // set XM as analog input
-  //  mPORTAClearBits(YPbit);
-  //  mPORTASetPinsAnalogIn(YPbit);
 
   adc_select_input(XMchan);
   int z1 = adc_read();
   adc_select_input(YPchan);
   int z2 = adc_read();
-  
-  //  int z1 = readADC(XMAN);
-  //  int z2 = readADC(YPAN);
 
    if (RXPLATE != 0) {
      // now read the x 
@@ -166,7 +140,6 @@ void getPoint(struct TSPoint * p) {
      z = 0;
    }
 
-   //printf("Internal point %d, %d, %d\n", x, y, z);
    printf("done?\n");
    setTSPoint(p, x, y, z);
 }
