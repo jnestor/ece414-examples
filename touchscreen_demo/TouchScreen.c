@@ -71,13 +71,9 @@ void getPoint(struct TSPoint * p) {
   // mPORTASetPinsDigitalOut(XPbit | XMbit);
   // mPORTASetBits(XPbit);
   // mPORTAClearBits(XMbit);
-   printf("getting samples\n");
    for (i=0; i<NUMSAMPLES; i++) {
       samples[i] = adc_read();
-      printf("samples[%d] = %d\n", i, samples[i]);
-      //samples[i] = readADC(YPAN);
    }
-   printf("samples obtained\n");
 #if NUMSAMPLES > 2
    insert_sort(samples, NUMSAMPLES);
 #endif
