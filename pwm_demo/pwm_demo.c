@@ -18,7 +18,7 @@ uint8_t linebuf [100];
 int main() {
     uint16_t pwm_level = 0x8000;  // start with a 50% duty cycle
     stdio_init_all();
-    printf(gi"Setting OC limit to %x\n", pwm_level);
+    printf("Setting OC limit to %x\n", pwm_level);
     pwm_pin_init(pwm_level);
     while (1) { 
         if (uart_is_readable(uart0)) {
